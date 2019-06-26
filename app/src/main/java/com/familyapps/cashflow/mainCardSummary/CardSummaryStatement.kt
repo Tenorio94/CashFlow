@@ -1,4 +1,4 @@
-package com.familyapps.cashflow
+package com.familyapps.cashflow.mainCardSummary
 
 class CardSummaryStatement (cardImage: Int, cardSummary: String, cardName : String) {
     var cardImageResource : Int = cardImage

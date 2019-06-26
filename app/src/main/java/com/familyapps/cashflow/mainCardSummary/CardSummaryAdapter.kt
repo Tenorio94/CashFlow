@@ -1,4 +1,4 @@
-package com.familyapps.cashflow
+package com.familyapps.cashflow.mainCardSummary
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.familyapps.cashflow.R
 
 class CardSummaryAdapter(private val cardListSummary: ArrayList<CardSummaryStatement>) :
     RecyclerView.Adapter<CardSummaryAdapter.CardSummaryViewHolder>() {

@@ -10,5 +10,4 @@ class CardSummaryStatement (cardImage: Int, cardSummary: String, cardName : Stri
         this.cardSummaryStatement = cardSummary
         this.cardSummaryName = cardName
     }
-
 }

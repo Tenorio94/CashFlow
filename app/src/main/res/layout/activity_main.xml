@@ -17,7 +17,7 @@
             android:layout_marginTop="50dp"
             android:id="@+id/monthlyStatementTxtV"
             android:fontFamily="@font/andada"
-            android:textSize="36sp"/>
+            android:textSize="30sp"/>
 
     <TextView
             android:text="$0,000.00"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/monthlyMoneyTxtView"
             android:fontFamily="@font/andada"
-            android:textSize="36sp"
+            android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,15 +70,15 @@
     <!--</ScrollView>-->
 
     <Button
-            android:text="Add Expense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:id="@+id/quickAddExpense"
             style="@style/Widget.AppCompat.Button"
             app:layout_constraintStart_toEndOf="@+id/cardSummaryRecyclerView"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:onClick="addCard"/>
+            android:onClick="addCard"
+            android:background="@drawable/add_item_icon_48"/>
 
 </android.support.constraint.ConstraintLayout>

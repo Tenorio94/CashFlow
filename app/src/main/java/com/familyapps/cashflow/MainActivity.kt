@@ -6,8 +6,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
-import com.familyapps.cashflow.mainCardSummary.CardSummaryAdapter
-import com.familyapps.cashflow.mainCardSummary.CardSummaryStatement
+import com.familyapps.cashflow.application.maincardsummary.CardSummaryAdapter
+import com.familyapps.cashflow.application.maincardsummary.CardSummaryStatement
 
 
 class MainActivity : AppCompatActivity() {
@@ -59,8 +59,6 @@ class MainActivity : AppCompatActivity() {
         cardSummaryList.forEach {  Log.i("CreateRV", it.cardSummaryName)}
 
         summaryRecyclerView.adapter = summaryRecViewAdapter
-
-//        summaryRecViewAdapter.onClickCardListener()
     }
 
     fun addCard(view: View) {
@@ -72,15 +70,5 @@ class MainActivity : AppCompatActivity() {
         Log.i("CreateRV", cardSummaryList[cardSummaryList.size - 1].cardSummaryName)
         summaryRecViewAdapter.notifyItemInserted(cardSummaryList.size - 1)
 
-//        val parentLayout = findViewById<LinearLayout>(R.id.cardLinearLayout)
-//        val inflater = baseContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//
-//        val viewAdded = inflater.inflate(R.layout.card_summary_activity, parentLayout,false)
-//        val newToAdd = viewAdded.findViewById<LinearLayout>(R.id.cardHrzLinearLayout)
-//
-//        val stringID = newToAdd.id as String
-//        val currentSequence = newToAdd.findViewById<>()
-//
-//        parentLayout.addView(viewAdded)
     }
 }

@@ -1,4 +1,4 @@
-package com.familyapps.cashflow.mainCardSummary
+package com.familyapps.cashflow.application.maincardsummary
 
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.familyapps.cashflow.mainCardSummary
+package com.familyapps.cashflow.application.maincardsummary
 
 import android.support.v7.widget.RecyclerView
 import android.util.Log

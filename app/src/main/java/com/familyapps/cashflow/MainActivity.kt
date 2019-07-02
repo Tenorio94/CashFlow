@@ -4,15 +4,18 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
-import com.familyapps.cashflow.mainCardSummary.CardSummaryAdapter
-import com.familyapps.cashflow.mainCardSummary.CardSummaryStatement
+import com.familyapps.cashflow.application.maincardsummary.CardSummaryAdapter
+import com.familyapps.cashflow.application.maincardsummary.CardSummaryStatement
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var summaryRecLayoutManager: RecyclerView.LayoutManager
+    private lateinit var summaryRecyclerView: RecyclerView
+    private lateinit var summaryRecViewAdapter: CardSummaryAdapter
 
-    private var cardSummaryList : ArrayList<CardSummaryStatement> = arrayListOf<CardSummaryStatement>()
-    private var summaryRecViewAdapter: RecyclerView.Adapter<*>? = null
+    private var cardSummaryList: ArrayList<CardSummaryStatement> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,34 +49,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createRecycleView() {
-        val summaryRecyclerView: RecyclerView = findViewById(R.id.cardSummaryRecyclerView)
-        val summaryRecLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
-        summaryRecViewAdapter = CardSummaryAdapter(cardSummaryList)
-
+        summaryRecyclerView = findViewById(R.id.cardSummaryRecyclerView)
         summaryRecyclerView.setHasFixedSize(true)
+
+        summaryRecLayoutManager = LinearLayoutManager(this)
         summaryRecyclerView.layoutManager = summaryRecLayoutManager
+
+        summaryRecViewAdapter = CardSummaryAdapter(cardSummaryList)
         summaryRecyclerView.adapter = summaryRecViewAdapter
     }
 
     fun addCard(view: View) {
         cardSummaryList.add(
             CardSummaryStatement(
-                R.drawable.ic_flight_land,
-                "$6,780.00",
-                "Banncomer Azul"
+                R.drawable.ic_flight_land, "$6,780.00", "Banncomer Azul"
             )
         )
-        summaryRecViewAdapter?.notifyItemInserted(cardSummaryList.size - 1)
+        Log.i("CreateRV", cardSummaryList[cardSummaryList.size - 1].cardSummaryName)
+        summaryRecViewAdapter.notifyItemInserted(cardSummaryList.size - 1)
 
-//        val parentLayout = findViewById<LinearLayout>(R.id.cardLinearLayout)
-//        val inflater = baseContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//
-//        val viewAdded = inflater.inflate(R.layout.card_summary_activity, parentLayout,false)
-//        val newToAdd = viewAdded.findViewById<LinearLayout>(R.id.cardHrzLinearLayout)
-//
-//        val stringID = newToAdd.id as String
-//        val currentSequence = newToAdd.findViewById<>()
-//
-//        parentLayout.addView(viewAdded)
     }
 }

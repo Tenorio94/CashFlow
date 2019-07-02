@@ -1,5 +1,6 @@
 package com.familyapps.cashflow.application.maincardsummary
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
@@ -7,6 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.familyapps.cashflow.R
+import com.familyapps.cashflow.application.carddetails.CardDetailActivity
+import com.familyapps.cashflow.application.carddetails.CardDetailDTO
+import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CardSummaryAdapter(private val cardList: ArrayList<CardSummaryStatement>) :
@@ -46,12 +52,22 @@ class CardSummaryAdapter(private val cardList: ArrayList<CardSummaryStatement>) 
         }
 
         override fun onClick(itemView: View) {
-            val creditCardCredit = itemView.findViewById<TextView>(R.id.summaryCardStatementTextView).text
-            val creditCardName = itemView.findViewById<TextView>(R.id.summaryCardNameTextView).text
-            Log.i(
-                "RecyclerView",
-                String.format("Clicked on %s Credit Card with Credit %s", creditCardName, creditCardCredit)
-            )
+            val cardId = UUID.randomUUID().toString()
+            val userId = "79260547"
+            val creditCardCredit = itemView.findViewById<TextView>(R.id.summaryCardStatementTextView).text.toString()
+            val creditCardName = itemView.findViewById<TextView>(R.id.summaryCardNameTextView).text.toString()
+            val creditCardImg = itemView.findViewById<ImageView>(R.id.cardSumaryImageView)
+
+
+            val context = itemView.context
+            val detailsDTO = CardDetailDTO(creditCardName, creditCardCredit, 1)
+
+            Log.i("CardSummaryOnClick", String.format("%s Card with Statement %s sent", creditCardName, creditCardCredit))
+
+            val cardDetailsIntent = Intent(context, CardDetailActivity::class.java).apply {
+                putExtra("extra", detailsDTO)
+            }
+            context.startActivity(cardDetailsIntent)
         }
     }
 }

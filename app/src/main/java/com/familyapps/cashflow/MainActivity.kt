@@ -56,8 +56,6 @@ class MainActivity : AppCompatActivity() {
         summaryRecyclerView.layoutManager = summaryRecLayoutManager
 
         summaryRecViewAdapter = CardSummaryAdapter(cardSummaryList)
-        cardSummaryList.forEach {  Log.i("CreateRV", it.cardSummaryName)}
-
         summaryRecyclerView.adapter = summaryRecViewAdapter
     }
 

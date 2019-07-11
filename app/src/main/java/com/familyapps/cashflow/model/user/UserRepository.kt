@@ -14,6 +14,9 @@ interface UserRepository {
     @Update
     fun updateUser(user: User)
 
+    @Query("DELETE FROM USER")
+    fun deleteAllUsers() : List<Long>
+
     @Query("SELECT * FROM USER")
     fun getAllUsers() : List<User>
 

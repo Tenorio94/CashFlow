@@ -9,38 +9,84 @@ import com.familyapps.cashflow.R
 import com.familyapps.cashflow.model.CashFlowDatabase
 import com.familyapps.cashflow.model.DbWorkerThread
 import com.familyapps.cashflow.model.user.User
-import com.familyapps.cashflow.model.user.UserRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+
 
 class CardDetailActivity : AppCompatActivity() {
 
-    private var cashFlowDb : CashFlowDatabase? = null
+    private var cashFlowDb: CashFlowDatabase? = null
     private lateinit var dbWorkerThread: DbWorkerThread
     private val uiHandler = Handler()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.card_details_activity)
+        cashFlowDb = CashFlowDatabase.getInstance(this)
 
         dbWorkerThread = DbWorkerThread("cashFlowDbWorkerThread")
         dbWorkerThread.start()
 
-        cashFlowDb = CashFlowDatabase.getInstance(this) as CashFlowDatabase?
+        GlobalScope.launch {
+            populateDatabase()
+            runBlocking {
+                launch {
+                    populateUI()
+                }
+            }
+        }
 
 
+//        var data: List<UserDC>?
 
-//        val userToInsert = User(0, "Gerardo", "Tenorio", null, "geteca94@gmail.com")
+//        GlobalScope.launch {
+//            cashFlowDb?.runInTransaction {
 //
-//        val task = Runnable { cashFlowDb?.userRepository()?.insertUser(userToInsert) }
-//        dbWorkerThread.postTask(task)
+//                cashFlowDb?.userDCRepository()?.insertUser(userToInsert)
+//                Log.i("DBTest", String.format("%s has been inserted", userToInsert.email))
+//            }
+//        }
 //
-//        val fetchTask = cashFlowDb?.userRepository()?.findUserByEmail("geteca94@gmail.com") as User
+//        GlobalScope.launch {
+//            cashFlowDb?.runInTransaction {
+//
+//                data = cashFlowDb?.userDCRepository()?.getAllUserDCs()
+//                Log.i("DBTest", "Fetching Database...")
+//
+//                data?.forEach {
+//                    Log.i("DBTest", String.format("%s found for email %s", it.firstName, it.email))
+//                }
+//            }
+//        }
+
+//        val fetchTask = Runnable { cashFlowDb?.userDCRepository()?.getAllUserDCs() }
+//        dbWorkerThread.postTask(fetchTask)
+//        Log.i("DBTest", String.format("%s retrieved", fetchTask))
 //        Log.i("DBTest", String.format("%s found for email %s", fetchTask.firstName, fetchTask.email))
-//
+
+        Log.i("AfterDB", "Data inserted and following...")
         val cardDetails = intent.getParcelableExtra<CardDetailDTO>("extra")
         println(cardDetails.cardName)
 
         findViewById<TextView>(R.id.cardNameDetailsTextView).text = cardDetails.cardName
+    }
 
+    fun populateUI() {
+        val userRepository = cashFlowDb?.userRepository()
+        val userList = userRepository?.getAllUsers()
+        println(userList.toString())
+        userList?.forEach{
+            Log.i("DBTest", String.format("%s found for email %s", it.firstName, it.email))
+        }
+    }
 
+    fun populateDatabase() {
+        val userRepository = cashFlowDb?.userRepository()
+        val userToInsert = User(0, "Gerardo", "Tenorio", null, "geteca94@gmail.com")
+        val userId = userRepository?.insertUser(userToInsert)
+        Log.i("DBTest", String.format("%s has been inserted with id %d", userToInsert.email, userId))
     }
 }

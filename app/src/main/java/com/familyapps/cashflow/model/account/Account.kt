@@ -2,40 +2,28 @@ package com.familyapps.cashflow.model.account
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.util.*
 
-@Entity(tableName = "ACCOUNT")
-class Account {
+@Entity(
+    tableName = "ACCOUNT",
+    indices = arrayOf(Index(value = ["ACCOUNT_NUMBER", "TYPE"], unique = true))
+)
+data class Account(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ACCOUNT_ID")
-    var id : Int? = 0
+    var id: Int?,
 
     @ColumnInfo(name = "ACCOUNT_NUMBER")
-    var accountNumber : Int = 0
+    var accountNumber: Int,
 
     @ColumnInfo(name = "BRANCH")
-    var accountBranch : String = ""
+    var accountBranch: String,
 
     @ColumnInfo(name = "TYPE")
-    var accountType : String = ""
+    var accountType: String,
 
-    override fun equals(other: Any?): Boolean {
-        if(other == null)
-            return false
+    @ColumnInfo(name = "ACCOUNT_EMAIL")
+    var accountEmail: String
 
-        if(javaClass != other.javaClass)
-            return false
-
-        val otherAccount = other as Account
-
-        return id == otherAccount.id
-                && accountNumber == otherAccount.accountNumber
-                && accountBranch == otherAccount.accountBranch
-                && accountType == otherAccount.accountType
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hash(id, accountNumber, accountBranch, accountType)
-    }
-}
+)

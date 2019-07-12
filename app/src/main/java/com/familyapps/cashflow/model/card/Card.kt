@@ -3,50 +3,31 @@ package com.familyapps.cashflow.model.card
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 import java.time.Instant
-import java.util.*
 
-open class Card {
+open class Card (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "CARD_ID")
-    var id: Int? = null
+    var id: Int?,
 
     @ColumnInfo(name = "CARD_NAME")
-    var cardName: String = ""
+    var cardName: String,
 
     @ColumnInfo(name = "CARD_NUMBER")
-    var cardNumber: String = ""
+    var cardNumber: String,
 
     @ColumnInfo(name = "EXPIRATION_DATE")
-    var expirationDate: Instant = Instant.now()
+    var expirationDate: Instant,
 
     @ColumnInfo(name = "ISSUED_DATE")
-    var issuedDate: Instant = Instant.now()
+    var issuedDate: Instant,
 
     @ColumnInfo(name = "TYPE")
-    var cardType: String = "DEBIT"
+    var cardType: String = "DEBIT",
 
     @ColumnInfo(name = "ISSUING_BANK")
-    var issuingBank: String = ""
+    var issuingBank: String,
 
-    override fun equals(other: Any?): Boolean {
-        if (other == null)
-            return false
+    @ColumnInfo(name = "ACCOUNT_NUMBER")
+    var accountNumber: String
 
-        if(javaClass != other.javaClass)
-            return false
-
-        val otherCard = other as Card
-
-        return id == otherCard.id
-                && cardName == otherCard.cardName
-                && cardNumber == otherCard.cardNumber
-                && expirationDate == otherCard.expirationDate
-                && issuedDate == otherCard.issuedDate
-                && cardType == otherCard.cardType
-                && issuingBank == otherCard.issuingBank
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hash(id, cardName, cardNumber, expirationDate, issuedDate, cardType, issuingBank)
-    }
-}
+)

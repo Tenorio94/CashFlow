@@ -1,13 +1,14 @@
 package com.familyapps.cashflow
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
-import android.view.View
 import com.familyapps.cashflow.application.maincardsummary.CardSummaryAdapter
 import com.familyapps.cashflow.application.maincardsummary.CardSummaryStatement
+import com.familyapps.cashflow.infraestructure.databaseextensions.populateBanks
+import com.familyapps.cashflow.model.CashFlowDatabase
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,12 +17,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var summaryRecViewAdapter: CardSummaryAdapter
 
     private var cardSummaryList: ArrayList<CardSummaryStatement> = arrayListOf()
+    private var cashFlowDb: CashFlowDatabase? = CashFlowDatabase.getInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createCardList()
         createRecycleView()
+        populateBanks(cashFlowDb)
     }
 
     private fun createCardList() {
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         summaryRecyclerView.adapter = summaryRecViewAdapter
     }
 
-    fun addCard(view: View) {
+    fun addCard() {
         cardSummaryList.add(
             CardSummaryStatement(
                 R.drawable.ic_flight_land, "$6,780.00", "Banncomer Azul"

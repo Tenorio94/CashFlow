@@ -11,6 +11,9 @@ interface BankRepository {
     @Insert
     fun insertBank(bank: Bank) : Long
 
+    @Insert
+    fun insertBankBatch(banks: ArrayList<Bank>)
+
     @Update
     fun updateBank(bank: Bank)
 

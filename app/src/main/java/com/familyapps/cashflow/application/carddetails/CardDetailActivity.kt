@@ -85,8 +85,15 @@ class CardDetailActivity : AppCompatActivity() {
 
     fun populateDatabase() {
         val userRepository = cashFlowDb?.userRepository()
-        val userToInsert = User(0, "Gerardo", "Tenorio", null, "geteca94@gmail.com")
-        val userId = userRepository?.insertUser(userToInsert)
-        Log.i("DBTest", String.format("%s has been inserted with id %d", userToInsert.email, userId))
+        val userExists = userRepository?.userExistsByEmail("geteca94@gmail.com")
+
+        if(!userExists!!) {
+            val userToInsert = User(0, "Gerardo", "Tenorio", null, "geteca94@gmail.com")
+            val userId = userRepository?.insertUser(userToInsert)
+            Log.i("DBTest", String.format("%s has been inserted with id %d", userToInsert.email, userId))
+        }
+        else {
+            Log.i("DBTest", "User registered...")
+        }
     }
 }

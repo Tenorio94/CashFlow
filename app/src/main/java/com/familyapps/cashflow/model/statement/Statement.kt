@@ -15,6 +15,9 @@ class Statement(
     @ColumnInfo(name = "MONTH")
     var month: String,
 
+    @ColumnInfo(name = "STATEMENT_AMOUNT")
+    var statementAmount: Double,
+
     @ColumnInfo(name = "START_DATE")
     var startDate: Instant,
 

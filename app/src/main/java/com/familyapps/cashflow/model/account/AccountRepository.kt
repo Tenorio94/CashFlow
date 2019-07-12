@@ -15,7 +15,7 @@ interface AccountRepository {
     fun updateAccount(account : Account)
 
     @Query("DELETE FROM ACCOUNT WHERE ACCOUNT_NUMBER = :accountNumber")
-    fun deleteAccount(accountNumber : String) : Long
+    fun deleteAccount(accountNumber : String) : Int
 
     @Query("SELECT * FROM ACCOUNT WHERE ACCOUNT_NUMBER = :accountNumber")
     fun findAccountByAccountNumber(accountNumber : String) : Account

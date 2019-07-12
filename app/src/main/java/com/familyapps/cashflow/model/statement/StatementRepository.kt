@@ -15,7 +15,7 @@ interface StatementRepository {
     fun updateStatement(statement: Statement)
 
     @Query("SELECT * FROM STATEMENT WHERE MONTH = :month")
-    fun findStatementByMonth(month: String)
+    fun findStatementByMonth(month: String) : Statement
 
     @Query("SELECT * FROM STATEMENT WHERE CARD_NUMBER = :cardNumber")
     fun findStatementsByCardNumber(cardNumber: String) : List<Statement>

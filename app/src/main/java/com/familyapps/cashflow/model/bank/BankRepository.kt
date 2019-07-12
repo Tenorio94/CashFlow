@@ -15,10 +15,10 @@ interface BankRepository {
     fun updateBank(bank: Bank)
 
     @Query("DELETE FROM BANK")
-    fun deleteAllBanks() : List<Long>
+    fun deleteAllBanks() : Int
 
     @Query("DELETE FROM BANK WHERE BANK_NAME = :bankName")
-    fun deleteBank(bankName : String) : Long
+    fun deleteBank(bankName : String) : Int
 
     @Query(value = "SELECT * FROM BANK WHERE BANK_NAME = :bankName")
     fun findBankByBankName(bankName : String) : Bank

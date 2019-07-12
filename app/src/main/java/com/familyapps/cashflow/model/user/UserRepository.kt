@@ -9,17 +9,20 @@ import androidx.room.Update
 interface UserRepository {
 
     @Insert
-    fun insertUser(user: User)
+    fun insertUser(user: User): Long
 
     @Update
     fun updateUser(user: User)
 
     @Query("DELETE FROM USER")
-    fun deleteAllUsers() : List<Long>
+    fun deleteAllUsers(): Int
 
     @Query("SELECT * FROM USER")
-    fun getAllUsers() : List<User>
+    fun getAllUsers(): List<User>
 
     @Query("SELECT * FROM USER WHERE EMAIL = :email")
-    fun findUserByEmail(email : String) : User
+    fun findUserByEmail(email: String): User
+
+    @Query("SELECT * FROM USER WHERE EMAIL = :email")
+    fun userExistsByEmail(email: String): Boolean
 }

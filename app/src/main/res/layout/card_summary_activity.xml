@@ -41,6 +41,13 @@
                 android:layout_toEndOf="@+id/cardSumaryImageView"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="0dp"/>
+        
+        <TextView
+                android:id="@+id/cardSummaryCardNumber"
+                android:text="4146987488954245"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
 
     </RelativeLayout>

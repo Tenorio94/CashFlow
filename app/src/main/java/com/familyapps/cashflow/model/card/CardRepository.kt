@@ -14,6 +14,9 @@ interface CardRepository {
     @Insert
     fun insertNewDebitCard(debitCard: DebitCard)
 
+    @Insert
+    fun insertBatchCreditCard(creditCard: List<CreditCard>)
+
     @Update
     fun updateCreditCard(creditCard: CreditCard)
 
@@ -31,6 +34,9 @@ interface CardRepository {
 
     @Query("SELECT * FROM DEBIT_CARD WHERE ACCOUNT_NUMBER = :accountNumber")
     fun findDebitByAccountNumber(accountNumber: String): DebitCard
+
+    @Query("SELECT * FROM CREDIT_CARD WHERE CARD_EMAIL = :email")
+    fun findAllCreditCardsByEmail(email: String): List<CreditCard>
 
     @Query("DELETE FROM DEBIT_CARD WHERE CARD_NUMBER = :cardNumber")
     fun deleteDebitCardByCardNumber(cardNumber: String): Int

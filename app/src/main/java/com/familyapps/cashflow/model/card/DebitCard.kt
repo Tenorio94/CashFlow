@@ -9,6 +9,9 @@ class DebitCard (
     @ColumnInfo(name = "CARD_ID")
     var id: Int?,
 
+    @ColumnInfo(name = "BANK_CARD_NAME")
+    var bankCardName: String,
+
     @ColumnInfo(name = "CARD_NAME")
     var cardName: String,
 

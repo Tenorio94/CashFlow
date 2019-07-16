@@ -3,7 +3,10 @@ package com.familyapps.cashflow.model.card
 import androidx.room.*
 import java.time.Instant
 
-@Entity(tableName = "CREDIT_CARD", indices = arrayOf(Index(value = ["CARD_NUMBER", "ACCOUNT_NUMBER"])))
+@Entity(
+    tableName = "CREDIT_CARD",
+    indices = arrayOf(Index(value = ["CARD_NUMBER", "ACCOUNT_NUMBER"]), Index(value = ["CARD_NUMBER", "CARD_EMAIL"]))
+)
 data class CreditCard(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "CARD_ID")
@@ -11,6 +14,9 @@ data class CreditCard(
 
     @ColumnInfo(name = "CARD_NAME")
     var cardName: String,
+
+    @ColumnInfo(name = "BANK_CARD_NAME")
+    var bankCardName: String,
 
     @ColumnInfo(name = "CARD_NUMBER")
     var cardNumber: String,
@@ -29,6 +35,9 @@ data class CreditCard(
 
     @ColumnInfo(name = "ACCOUNT_NUMBER")
     var accountNumber: String,
+
+    @ColumnInfo(name = "CARD_EMAIL")
+    var cardEmail: String,
 
     @ColumnInfo(name = "CUTOFF_DATE")
     var cutOffDate: Instant,

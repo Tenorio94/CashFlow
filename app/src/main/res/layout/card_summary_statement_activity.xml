@@ -11,46 +11,37 @@
             android:layout_height="match_parent"
             android:layout_margin="4dp">
 
-        <ImageView
-                android:layout_width="50dp"
+        <TextView
+                android:text="$0,000.00"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:paddingTop="15dp"
                 app:srcCompat="@android:drawable/ic_menu_slideshow"
-                android:id="@+id/cardSumaryImageView"/>
+                android:id="@+id/cardSummaryStatement"/>
 
         <TextView
-                android:text="Card Name"
+                android:text="Buying Summary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/summaryCardNameTextView"
-                android:textSize="18sp"
+                android:id="@+id/cardSumaryBuying"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/andada"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/cardSumaryImageView"
-                android:layout_marginTop="0dp"
-                android:layout_marginStart="8dp"/>
+                android:layout_toEndOf="@+id/cardSummaryStatement"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="15dp"/>
 
         <TextView
                 android:text="$0,000.00"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/summaryCardStatementTextView"
+                android:id="@+id/summaryCardTransactionDate"
                 android:textSize="15sp"
                 android:fontFamily="@font/andada"
-                android:layout_below="@+id/summaryCardNameTextView"
-                android:layout_toEndOf="@+id/cardSumaryImageView"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="0dp"/>
-        
-        <TextView
-                android:id="@+id/cardSummaryCardNumber"
-                android:text="4146987488954245"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
-
+                android:layout_toEndOf="@+id/cardSumaryBuying"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"/>
 
     </RelativeLayout>
-
-
 </androidx.cardview.widget.CardView>

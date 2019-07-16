@@ -32,11 +32,6 @@ class CardDetailActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             populateDatabase()
-            runBlocking {
-                launch {
-                    populateUI()
-                }
-            }
         }
 
 
@@ -72,15 +67,6 @@ class CardDetailActivity : AppCompatActivity() {
         println(cardDetails.cardName)
 
         findViewById<TextView>(R.id.cardNameDetailsTextView).text = cardDetails.cardName
-    }
-
-    fun populateUI() {
-        val userRepository = cashFlowDb?.userRepository()
-        val userList = userRepository?.getAllUsers()
-        println(userList.toString())
-        userList?.forEach{
-            Log.i("DBTest", String.format("%s found for email %s", it.firstName, it.email))
-        }
     }
 
     fun populateDatabase() {

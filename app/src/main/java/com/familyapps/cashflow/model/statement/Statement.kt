@@ -19,11 +19,17 @@ class Statement(
     var statementAmount: Double,
 
     @ColumnInfo(name = "START_DATE")
-    var startDate: Instant,
+    var startDate: Instant?,
 
     @ColumnInfo(name = "END_DATE")
-    var endDate: Instant,
+    var endDate: Instant?,
 
     @ColumnInfo(name = "CARD_NUMBER")
-    var cardNumber: String
+    var cardNumber: String,
+
+    @ColumnInfo(name = "ACCOUNT_NUMBER")
+    var accountNumber: String,
+
+    @ColumnInfo(name = "STATEMENT_EMAIL")
+    var statementEmail: String
 )

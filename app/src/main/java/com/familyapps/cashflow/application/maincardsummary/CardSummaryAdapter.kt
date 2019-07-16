@@ -18,14 +18,14 @@ import kotlin.collections.ArrayList
 class CardSummaryAdapter(private val cardList: ArrayList<CardSummaryStatement>) :
     RecyclerView.Adapter<CardSummaryAdapter.CardSummaryViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardSummaryAdapter.CardSummaryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardSummaryViewHolder {
         val inflatedView = parent.inflate(R.layout.card_summary_activity, false)
         return CardSummaryViewHolder(inflatedView)
     }
 
     override fun getItemCount(): Int = cardList.size
 
-    override fun onBindViewHolder(holder: CardSummaryAdapter.CardSummaryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CardSummaryViewHolder, position: Int) {
         val currentCard: CardSummaryStatement = cardList[position]
 
         holder.cardSummaryImageView.setImageResource(currentCard.cardImageResource)
@@ -52,21 +52,20 @@ class CardSummaryAdapter(private val cardList: ArrayList<CardSummaryStatement>) 
         }
 
         override fun onClick(itemView: View) {
-            val cardId = UUID.randomUUID().toString()
-            val userId = "79260547"
+            val context = itemView.context
+
             val creditCardCredit = itemView.findViewById<TextView>(R.id.summaryCardStatementTextView).text.toString()
             val creditCardName = itemView.findViewById<TextView>(R.id.summaryCardNameTextView).text.toString()
-            val creditCardImg = itemView.findViewById<ImageView>(R.id.cardSumaryImageView)
+            val creditCardNumber = itemView.findViewById<TextView>(R.id.cardSummaryCardNumber).text.toString()
 
-
-            val context = itemView.context
-            val detailsDTO = CardDetailDTO(creditCardName, creditCardCredit, 1)
+            val detailsDTO = CardDetailDTO(creditCardName, creditCardCredit, 1, creditCardNumber)
 
             Log.i("CardSummaryOnClick", String.format("%s Card with Statement %s sent", creditCardName, creditCardCredit))
 
             val cardDetailsIntent = Intent(context, CardDetailActivity::class.java).apply {
                 putExtra("extra", detailsDTO)
             }
+
             context.startActivity(cardDetailsIntent)
         }
     }

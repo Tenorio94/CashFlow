@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+/?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                                    xmlns:app="http://schemas.android.com/apk/res-auto"
                                    android:layout_width="match_parent"
@@ -17,7 +17,7 @@
                 android:layout_height="50dp"
                 android:paddingTop="15dp"
                 app:srcCompat="@android:drawable/ic_menu_slideshow"
-                android:id="@+id/cardSummaryStatement"/>
+                android:id="@+id/txnAmount"/>
 
         <TextView
                 android:text="Buying Summary"
@@ -28,12 +28,12 @@
                 android:textStyle="bold"
                 android:fontFamily="@font/andada"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/cardSummaryStatement"
+                android:layout_toEndOf="@+id/txnAmount"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="15dp"/>
 
         <TextView
-                android:text="$0,000.00"
+                android:text="01/19/1994"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/summaryCardTransactionDate"

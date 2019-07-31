@@ -16,6 +16,7 @@ import com.familyapps.cashflow.model.card.DebitCard
 import com.familyapps.cashflow.model.statement.Statement
 import com.familyapps.cashflow.model.statement.StatementRepository
 import com.familyapps.cashflow.model.transaction.Transaction
+import com.familyapps.cashflow.model.transaction.TransactionRepository
 import com.familyapps.cashflow.model.user.User
 import com.familyapps.cashflow.model.user.UserRepository
 
@@ -38,6 +39,7 @@ abstract class CashFlowDatabase : RoomDatabase() {
     abstract fun accountRepository(): AccountRepository
     abstract fun cardRepository(): CardRepository
     abstract fun statementRepository(): StatementRepository
+    abstract fun transactionRepository(): TransactionRepository
 
     companion object {
         private var INSTANCE: CashFlowDatabase? = null

@@ -1,13 +1,14 @@
 package com.familyapps.cashflow.application.carddetails
 
-import java.time.Instant
 
-class CardDetailsTransactionSummary(_txnMonthAmount: Double, _txnDate: Instant) {
-    var txnMonthAmount : Double = _txnMonthAmount
-    var txnDate : Instant = _txnDate
+class CardDetailsTransactionSummary(_txnMonthAmount: String, _txnDate: String, _txnDescription: String) {
+    var txnMonthAmount : String = _txnMonthAmount
+    var txnDate : String = _txnDate
+    var txnDescription: String = _txnDescription
 
     init {
         this.txnMonthAmount = _txnMonthAmount
         this.txnDate = _txnDate
+        this.txnDescription = _txnDescription
     }
 }

@@ -31,6 +31,7 @@ class CardSummaryAdapter(private val cardList: ArrayList<CardSummaryStatement>) 
         holder.cardSummaryImageView.setImageResource(currentCard.cardImageResource)
         holder.cardNameTxtView.setText(currentCard.cardSummaryName)
         holder.cardSummaryTxtView.setText(currentCard.cardSummaryStatement)
+        holder.cardSummaryCardNumber.setText(currentCard.cardSummaryNumber)
     }
 
     class CardSummaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -39,12 +40,14 @@ class CardSummaryAdapter(private val cardList: ArrayList<CardSummaryStatement>) 
         var cardSummaryImageView: ImageView
         var cardNameTxtView: TextView
         var cardSummaryTxtView: TextView
+        var cardSummaryCardNumber: TextView
 
         init {
             view.setOnClickListener(this)
             this.cardSummaryImageView = itemView.findViewById(R.id.cardSumaryImageView)
             this.cardNameTxtView = itemView.findViewById(R.id.summaryCardNameTextView)
             this.cardSummaryTxtView = itemView.findViewById(R.id.summaryCardStatementTextView)
+            this.cardSummaryCardNumber = itemView.findViewById(R.id.cardSummaryCardNumber)
         }
 
         companion object {

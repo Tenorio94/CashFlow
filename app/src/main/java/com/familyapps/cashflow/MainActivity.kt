@@ -10,7 +10,6 @@ import com.familyapps.cashflow.application.maincardsummary.CardSummaryAdapter
 import com.familyapps.cashflow.application.maincardsummary.CardSummaryStatement
 import com.familyapps.cashflow.infraestructure.databaseextensions.*
 import com.familyapps.cashflow.model.CashFlowDatabase
-import com.familyapps.cashflow.model.DbWorkerThread
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*

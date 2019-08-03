@@ -17,6 +17,9 @@ interface StatementRepository {
     @Update
     fun updateStatement(statement: Statement)
 
+    @Query("DELETE FROM STATEMENT")
+    fun deleteAllStatements()
+
     @Query("SELECT * FROM STATEMENT WHERE MONTH = :month")
     fun findStatementByMonth(month: String) : Statement
 

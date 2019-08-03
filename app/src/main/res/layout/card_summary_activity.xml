@@ -24,7 +24,6 @@
                 android:id="@+id/summaryCardNameTextView"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/andada"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/cardSumaryImageView"
                 android:layout_marginTop="0dp"

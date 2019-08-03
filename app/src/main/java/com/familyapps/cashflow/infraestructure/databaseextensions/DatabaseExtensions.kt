@@ -4,13 +4,16 @@ import android.util.Log
 import com.familyapps.cashflow.MainActivity
 import com.familyapps.cashflow.MainActivity.Companion.currentMonth
 import com.familyapps.cashflow.R
+import com.familyapps.cashflow.application.carddetails.CardDetailsTransactionSummary
 import com.familyapps.cashflow.application.maincardsummary.CardSummaryStatement
 import com.familyapps.cashflow.infraestructure.convertDoubleToCash
+import com.familyapps.cashflow.infraestructure.convertInstantToString
 import com.familyapps.cashflow.model.CashFlowDatabase
 import com.familyapps.cashflow.model.DbWorkerThread
 import com.familyapps.cashflow.model.bank.Bank
 import com.familyapps.cashflow.model.card.CreditCard
 import com.familyapps.cashflow.model.statement.Statement
+import com.familyapps.cashflow.model.transaction.Transaction
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -18,6 +21,44 @@ import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 private lateinit var workerThread: DbWorkerThread
+
+
+fun populateTransactions(cashFlowDb: CashFlowDatabase?, cardNumber: String): ArrayList<CardDetailsTransactionSummary> {
+    workerThread = DbWorkerThread("cashFlowThread")
+    workerThread.start()
+
+    val LOG_TAG = "CF_CD_TxnPopulation"
+    Log.i(LOG_TAG, "Running transaction population...")
+
+    val txnSummaryList = arrayListOf<CardDetailsTransactionSummary>()
+
+
+    GlobalScope.launch {
+        val txnRepository = cashFlowDb?.transactionRepository()
+        Log.i(LOG_TAG, String.format("Looking for transactions for card %s", cardNumber))
+        val txnList = txnRepository?.findAllTransaction()
+
+        if (txnList!!.isNotEmpty()) {
+            txnList.forEach {
+                Log.i(
+                    LOG_TAG,
+                    String.format("Transaction found for Card %s with Description %s", cardNumber, it.description)
+                )
+                val cardDetailsTxn = CardDetailsTransactionSummary(
+                    convertDoubleToCash(it.amountPerMonth!!),
+                    convertInstantToString(it.txnDate),
+                    it.description!!
+                )
+                txnSummaryList.add(cardDetailsTxn)
+            }
+        } else {
+            Log.i(LOG_TAG, "No transactions found... Populating")
+            txnRepository.insertBatchTransaction(createTxnList())
+        }
+    }
+    Thread.sleep(50)
+    return txnSummaryList
+}
 
 fun populateStatements(cashFlowDb: CashFlowDatabase?): ArrayList<CardSummaryStatement> {
     workerThread = DbWorkerThread("cashFlowThread")
@@ -42,7 +83,12 @@ fun populateStatements(cashFlowDb: CashFlowDatabase?): ArrayList<CardSummaryStat
                 cardSearch = cardRepository?.findCreditCardByCardNumber(it.cardNumber)!!
 
                 val cardStatement =
-                    CardSummaryStatement(mapCardWithImage(cardSearch.bankCardName), convertDoubleToCash(it.statementAmount), cardSearch.cardName, it.cardNumber)
+                    CardSummaryStatement(
+                        mapCardWithImage(cardSearch.bankCardName),
+                        convertDoubleToCash(it.statementAmount),
+                        cardSearch.cardName,
+                        it.cardNumber
+                    )
                 cardStatementList.add(cardStatement)
             }
         } else {
@@ -55,7 +101,7 @@ fun populateStatements(cashFlowDb: CashFlowDatabase?): ArrayList<CardSummaryStat
 }
 
 
-fun mapCardWithImage(cardName: String) : Int {
+fun mapCardWithImage(cardName: String): Int {
 
     return when (cardName) {
         "AMEX_PT" -> R.drawable.amex_platinum_card
@@ -64,6 +110,76 @@ fun mapCardWithImage(cardName: String) : Int {
         "INV_VOLARIS2" -> R.drawable.invex_volaris2
         else -> R.drawable.ic_android
     }
+}
+
+fun createTxnList(): List<Transaction> {
+    val txn1 = Transaction(
+        null,
+        "Macbook Pro",
+        "MacStore",
+        29850.00,
+        true,
+        "24",
+        29850.00 / 24,
+        Instant.now().plusSeconds(Random.nextLong(86400)),
+        "5499490538837717",
+        "79260547"
+    )
+
+    val txn2 = Transaction(
+        null,
+        "Recámara Principal",
+        "Mueblería Plascencia",
+        12500.00,
+        true,
+        "6",
+        12500.00 / 6,
+        Instant.now().plusSeconds(Random.nextLong(86400)),
+        "371775436701005",
+        "tenorio94"
+    )
+
+    val txn3 = Transaction(
+        null,
+        "Conchón Spring Air",
+        "Super Colchones",
+        24500.00,
+        true,
+        "12",
+        24500.00 / 12,
+        Instant.now().plusSeconds(Random.nextLong(86400)),
+        "5499490538837717",
+        "79260547"
+    )
+
+    val txn4 = Transaction(
+        null,
+        "Vuelo Ramonchis",
+        "Volaris",
+        7690.00,
+        false,
+        "1",
+        24500.00 / 1,
+        Instant.now().plusSeconds(Random.nextLong(86400)),
+        "4196910100284245",
+        "gtenoriocastillo@gmail.com"
+    )
+
+    val txn5 = Transaction(
+        null,
+        "Carga Gas",
+        "Gas Rosa",
+        2001.64,
+        false,
+        "1",
+        2001.64 / 1,
+        Instant.now().plusSeconds(Random.nextLong(86400)),
+        "5288439112077716",
+        "79260547"
+    )
+
+
+    return listOf(txn1, txn2, txn3, txn4, txn5)
 }
 
 fun createStatementList(): List<Statement> {
@@ -186,7 +302,7 @@ fun createCardList(): List<CreditCard> {
     return listOf(amexCard, banamexClasica, banamexOro, invexVolaris)
 }
 
-fun createBankList(): ArrayList<Bank>{
+fun createBankList(): ArrayList<Bank> {
     val bankList = arrayListOf<Bank>()
     val banks = listOf<String>(
         "American Express",

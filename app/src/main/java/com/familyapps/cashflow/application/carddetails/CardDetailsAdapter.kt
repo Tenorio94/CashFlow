@@ -45,7 +45,6 @@ class CardDetailsAdapter (private val statementList: ArrayList<CardDetailsTransa
 
         override fun onClick(itemView: View) {
             Log.i("Card Details RecyclerView", "Recycler Clicked...")
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
     }

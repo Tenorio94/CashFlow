@@ -15,8 +15,8 @@ fun convertDoubleToCash(doubleToConvert: Double) : String{
 }
 
 fun convertInstantToString(instantToConvert: Instant) : String {
-    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-        .withLocale(Locale.GERMAN)
+    val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+        .withLocale(Locale.ENGLISH)
         .withZone(systemDefault())
 
     return formatter.format(instantToConvert)

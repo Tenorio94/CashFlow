@@ -17,6 +17,12 @@ interface TransactionRepository {
     @Update
     fun updateTransaction(transaction: Transaction)
 
+    @Query("DELETE FROM `TRANSACTION`")
+    fun deleteAllTransactions()
+
+    @Query("SELECT * FROM `TRANSACTION`")
+    fun findAllTransaction() : List<Transaction>
+
     @Query("SELECT * FROM `TRANSACTION` WHERE CARD_NUMBER = :cardNumber")
     fun findTransactionsByCardNumber(cardNumber: String) : List<Transaction>
 

@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.familyapps.cashflow.R
+import com.familyapps.cashflow.infraestructure.databaseextensions.mapCardWithImage
 import com.familyapps.cashflow.infraestructure.databaseextensions.populateTransactions
 import com.familyapps.cashflow.model.CashFlowDatabase
 import com.familyapps.cashflow.model.DbWorkerThread
+import com.familyapps.cashflow.model.card.CreditCard
 import com.familyapps.cashflow.model.transaction.Transaction
 import com.familyapps.cashflow.model.user.User
 import kotlinx.coroutines.GlobalScope
@@ -48,6 +51,7 @@ class CardDetailActivity : AppCompatActivity() {
         println(cardDetails.cardName)
 
         val txnList = populateTransactions(cashFlowDb, cardDetails.cardNumber)
+        findViewById<ImageView>(R.id.cardDetailsImageView).setImageDrawable(resources.getDrawable(assignCardImage(cashFlowDb!!, cardDetails.cardNumber)))
         findViewById<TextView>(R.id.cardNameDetailsTextView).text = cardDetails.cardName
 
         createRecyclerView(txnList)
@@ -76,5 +80,16 @@ class CardDetailActivity : AppCompatActivity() {
         } else {
             Log.i("DBTest", "User registered...")
         }
+    }
+
+    fun assignCardImage(cashFlowDb: CashFlowDatabase, cardNumber: String) : Int{
+        val creditCardRepository = cashFlowDb.cardRepository()
+        var cardData: CreditCard? = null
+        GlobalScope.launch {
+            cardData = creditCardRepository.findCreditCardByCardNumber(cardNumber)
+        }
+        Thread.sleep(15)
+        println(mapCardWithImage(cardData!!.bankCardName))
+        return mapCardWithImage(cardData!!.bankCardName)
     }
 }

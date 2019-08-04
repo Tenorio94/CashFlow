@@ -36,7 +36,7 @@ fun populateTransactions(cashFlowDb: CashFlowDatabase?, cardNumber: String): Arr
     GlobalScope.launch {
         val txnRepository = cashFlowDb?.transactionRepository()
         Log.i(LOG_TAG, String.format("Looking for transactions for card %s", cardNumber))
-        val txnList = txnRepository?.findAllTransaction()
+        val txnList = txnRepository?.findTransactionsByCardNumber(cardNumber)
 
         if (txnList!!.isNotEmpty()) {
             txnList.forEach {

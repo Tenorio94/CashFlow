@@ -60,6 +60,7 @@ class CardSummaryAdapter(private val cardList: ArrayList<CardSummaryStatement>) 
             val creditCardCredit = itemView.findViewById<TextView>(R.id.summaryCardStatementTextView).text.toString()
             val creditCardName = itemView.findViewById<TextView>(R.id.summaryCardNameTextView).text.toString()
             val creditCardNumber = itemView.findViewById<TextView>(R.id.cardSummaryCardNumber).text.toString()
+            val creditCardImage = itemView.findViewById<ImageView>(R.id.cardSumaryImageView).drawable
 
             val detailsDTO = CardDetailDTO(creditCardName, creditCardCredit, 1, creditCardNumber)
 

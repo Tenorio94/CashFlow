@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:layout_marginBottom="4dp"
-                                   app:cardCornerRadius="4dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="4dp">
 
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
 
         <TextView
-                android:text="$0,000.00"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:paddingTop="15dp"
-                app:srcCompat="@android:drawable/ic_menu_slideshow"
-                android:id="@+id/txnAmount"/>
+            android:id="@+id/txnAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingTop="15dp"
+            android:text="$0,000.00"
+            app:srcCompat="@android:drawable/ic_menu_slideshow" />
 
         <TextView
-                android:text="Buying Summary"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/cardSumaryBuying"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/txnAmount"
-                android:layout_marginStart="56dp"
-                android:layout_marginTop="10dp"/>
+            android:id="@+id/cardSumaryBuying"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/txnAmount"
+            android:text="Buying Summary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
-                android:text="01/19/1994"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:id="@+id/summaryCardTransactionDate"
-                android:textSize="15sp"
-                android:paddingTop="15dp"
-                android:fontFamily="@font/andada"
-                android:layout_toEndOf="@+id/cardSumaryBuying"
-                android:layout_marginStart="56dp"/>
+            android:id="@+id/summaryCardTransactionDate"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="56dp"
+            android:layout_toEndOf="@+id/cardSumaryBuying"
+            android:fontFamily="@font/andada"
+            android:paddingTop="15dp"
+            android:text="01/19/1994"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

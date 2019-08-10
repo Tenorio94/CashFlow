@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         val cashFlowDb: CashFlowDatabase? = CashFlowDatabase.getInstance(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d(LOG_TAG, String.format("Id of resource: %s",R.drawable.ic_android.toString()))
+        Log.d(LOG_TAG, String.format("Id of resource: %s", R.drawable.ic_android.toString()))
         populateBanks(cashFlowDb)
         populateCards(cashFlowDb)
         cardSummaryList = populateStatements(cashFlowDb)

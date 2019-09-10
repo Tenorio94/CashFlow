@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.familyapps.cashflow.application.maincardsummary.CardSummaryAdapter
@@ -21,6 +22,11 @@ import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
 import kotlin.collections.ArrayList
+import android.app.Activity
+import android.content.Context
+import android.widget.EditText
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -68,6 +74,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         cardSummaryList.forEach {
             Log.i(LOG_TAG, String.format("%s statement for %s card.", it.cardSummaryStatement, it.cardSummaryName))
         }
+        Thread.sleep(3000)
+
+        if (email.isNullOrEmpty()) {
+            Log.i(LOG_TAG, "User not logged in... Redirecting to login.")
+            val cardOverallSummary = findViewById<ConstraintLayout>(R.id.cardSummaryView)
+            cardOverallSummary.visibility = ConstraintLayout.GONE
+
+            val loginLayout = findViewById<ConstraintLayout>(R.id.loginLayout)
+            loginLayout.visibility = ConstraintLayout.VISIBLE
+        }
+
     }
 
     private fun createRecycleView() {
@@ -112,5 +129,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        val v = currentFocus
+
+        if (v != null &&
+            (ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE) &&
+            v is EditText &&
+            !v.javaClass.name.startsWith("android.webkit.")
+        ) {
+            val scrcoords = IntArray(2)
+            v.getLocationOnScreen(scrcoords)
+            val x = ev.rawX + v.left - scrcoords[0]
+            val y = ev.rawY + v.top - scrcoords[1]
+
+            if (x < v.left || x > v.right || y < v.top || y > v.bottom)
+                hideKeyboard(this)
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
+    fun hideKeyboard(activity: Activity?) {
+        if (activity != null && activity.window != null && activity.window.decorView != null) {
+            val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(activity.window.decorView.windowToken, 0)
+        }
     }
 }

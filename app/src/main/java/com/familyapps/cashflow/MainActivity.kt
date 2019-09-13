@@ -24,9 +24,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.widget.EditText
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import com.familyapps.cashflow.application.login.LoginActivity
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var summaryRecViewAdapter: CardSummaryAdapter
 
     private var cardSummaryList: ArrayList<CardSummaryStatement> = arrayListOf()
+    private val LOG_TAG = "CF_MA_MainCreate"
 
     companion object {
         var currentMonth = LocalDate.now().month.getDisplayName(TextStyle.FULL, Locale.US)
@@ -47,7 +50,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val LOG_TAG = "CF_MA_MainCreate"
         val cashFlowDb: CashFlowDatabase? = CashFlowDatabase.getInstance(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -65,26 +67,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
 
-        Log.d(LOG_TAG, String.format("Id of resource: %s", R.drawable.ic_android.toString()))
-        populateBanks(cashFlowDb)
-        populateCards(cashFlowDb)
-        cardSummaryList = populateStatements(cashFlowDb)
-        createRecycleView()
+        if (verifyUserLoggedIn()) {
+            Log.d(LOG_TAG, String.format("Id of resource: %s", R.drawable.ic_android.toString()))
+            populateBanks(cashFlowDb)
+            populateCards(cashFlowDb)
+            cardSummaryList = populateStatements(cashFlowDb)
+            createRecycleView()
 
-        cardSummaryList.forEach {
-            Log.i(LOG_TAG, String.format("%s statement for %s card.", it.cardSummaryStatement, it.cardSummaryName))
+            cardSummaryList.forEach {
+                Log.i(LOG_TAG, String.format("%s statement for %s card.", it.cardSummaryStatement, it.cardSummaryName))
+            }
         }
-        Thread.sleep(3000)
-
-        if (email.isNullOrEmpty()) {
-            Log.i(LOG_TAG, "User not logged in... Redirecting to login.")
-            val cardOverallSummary = findViewById<ConstraintLayout>(R.id.cardSummaryView)
-            cardOverallSummary.visibility = ConstraintLayout.GONE
-
-            val loginLayout = findViewById<ConstraintLayout>(R.id.loginLayout)
-            loginLayout.visibility = ConstraintLayout.VISIBLE
-        }
-
     }
 
     private fun createRecycleView() {
@@ -96,6 +89,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         summaryRecViewAdapter = CardSummaryAdapter(cardSummaryList)
         summaryRecyclerView.adapter = summaryRecViewAdapter
+    }
+
+    fun verifyUserLoggedIn() : Boolean {
+        if (email.isNullOrEmpty() || email.equals("gtenoriocastillo@gmail.com")) {
+            Log.i(LOG_TAG, "User not logged in... Redirecting to login.")
+            startActivity(Intent(this, LoginActivity::class.java))
+            this.finish()
+            return false
+        }
+        return true
     }
 
     fun addCard(view: View) {
@@ -123,31 +126,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        val v = currentFocus
-
-        if (v != null &&
-            (ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE) &&
-            v is EditText &&
-            !v.javaClass.name.startsWith("android.webkit.")
-        ) {
-            val scrcoords = IntArray(2)
-            v.getLocationOnScreen(scrcoords)
-            val x = ev.rawX + v.left - scrcoords[0]
-            val y = ev.rawY + v.top - scrcoords[1]
-
-            if (x < v.left || x > v.right || y < v.top || y > v.bottom)
-                hideKeyboard(this)
-        }
-        return super.dispatchTouchEvent(ev)
-    }
-
-    fun hideKeyboard(activity: Activity?) {
-        if (activity != null && activity.window != null && activity.window.decorView != null) {
-            val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(activity.window.decorView.windowToken, 0)
-        }
     }
 }

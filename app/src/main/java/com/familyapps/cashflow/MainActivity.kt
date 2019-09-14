@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var summaryRecViewAdapter: CardSummaryAdapter
 
     private var cardSummaryList: ArrayList<CardSummaryStatement> = arrayListOf()
-    private val LOG_TAG = "CF_MA_MainCreate"
+    private val LOGTAG = "CF_MA_MainCreate"
 
     companion object {
         var currentMonth = LocalDate.now().month.getDisplayName(TextStyle.FULL, Locale.US)
@@ -68,14 +68,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
         if (verifyUserLoggedIn()) {
-            Log.d(LOG_TAG, String.format("Id of resource: %s", R.drawable.ic_android.toString()))
+            Log.d(LOGTAG, String.format("Id of resource: %s", R.drawable.ic_android.toString()))
             populateBanks(cashFlowDb)
             populateCards(cashFlowDb)
             cardSummaryList = populateStatements(cashFlowDb)
             createRecycleView()
 
             cardSummaryList.forEach {
-                Log.i(LOG_TAG, String.format("%s statement for %s card.", it.cardSummaryStatement, it.cardSummaryName))
+                Log.i(LOGTAG, String.format("%s statement for %s card.", it.cardSummaryStatement, it.cardSummaryName))
             }
         }
     }
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun verifyUserLoggedIn() : Boolean {
         if (email.isNullOrEmpty() || email.equals("gtenoriocastillo@gmail.com")) {
-            Log.i(LOG_TAG, "User not logged in... Redirecting to login.")
+            Log.i(LOGTAG, "User not logged in... Redirecting to login.")
             startActivity(Intent(this, LoginActivity::class.java))
             this.finish()
             return false

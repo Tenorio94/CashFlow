@@ -13,11 +13,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.familyapps.cashflow.R
 import com.familyapps.cashflow.model.CashFlowDatabase
+import com.familyapps.cashflow.model.user.UserRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.text.MessageFormat
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var cashFlowDb : CashFlowDatabase
+    private lateinit var cashFlowDb: CashFlowDatabase
+    private lateinit var userRepository: UserRepository
 
-    private val LOG_TAG = "CF_LA_MainLogin"
+    private val LOGTAG = "CF_LA_MainLogin"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         cashFlowDb = CashFlowDatabase.getInstance(this)
@@ -29,19 +34,49 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun logUser(view: View) {
-        val emailTxtView = findViewById<TextView>(R.id.emailTxt).text
-        val passwordTxtView = findViewById<TextView>(R.id.pswdTxt).text
+    fun logButtonListener(view: View) {
+        val emailTxt = findViewById<TextView>(R.id.emailTxt).text.toString()
+        val passwordTxt = findViewById<TextView>(R.id.pswdTxt).text.toString()
 
-        if (emailTxtView.isNullOrEmpty()) {
+        if (validateInputs(emailTxt, passwordTxt)) {
+            if (validateUser(emailTxt)) {
+                if (validateLogin(emailTxt, passwordTxt)) {
+                    Log.i(LOGTAG, "Logging in...")
+                }
+            }
+        }
+    }
+
+    private fun validateLogin(email: String, password: String): Boolean {
+        return false
+    }
+
+    private fun validateUser(email: String): Boolean {
+        var userExistence = false
+        userRepository = cashFlowDb.userRepository()
+        GlobalScope.launch {
+            userExistence = userRepository.userExistsByEmail(email)
+            Log.i(LOGTAG, userRepository.getAllUsers().get(0).email)
+        }
+        Thread.sleep(30)
+        if (userExistence){
+            Log.i(LOGTAG, String.format("Validating user %s", email))
+            return true
+        }
+        Toast.makeText(this, "User does not exist, please register...", Toast.LENGTH_SHORT).show()
+        return false
+    }
+
+    private fun validateInputs(email: String, password: String): Boolean {
+        if (email.isNullOrEmpty()) {
             Toast.makeText(this, "User Email empty.", Toast.LENGTH_SHORT).show()
-            return
+            return false
         }
-        if (passwordTxtView.isNullOrEmpty()) {
+        if (password.isNullOrEmpty()) {
             Toast.makeText(this, "Password Email empty.", Toast.LENGTH_SHORT).show()
-            return
+            return false
         }
-        Log.i(LOG_TAG, "Logging in...")
+        return true
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

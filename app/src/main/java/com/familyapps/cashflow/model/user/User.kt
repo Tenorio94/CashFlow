@@ -23,6 +23,9 @@ data class User(
     @ColumnInfo(name = "EMAIL")
     var email: String,
 
+    @ColumnInfo(name = "PASSWORD")
+    var password: String,
+
     @ColumnInfo(name = "AGE")
     var age: Int? = 0,
 

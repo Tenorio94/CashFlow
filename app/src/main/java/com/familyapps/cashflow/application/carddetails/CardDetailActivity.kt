@@ -51,7 +51,14 @@ class CardDetailActivity : AppCompatActivity() {
         println(cardDetails.cardName)
 
         val txnList = populateTransactions(cashFlowDb, cardDetails.cardNumber)
-        findViewById<ImageView>(R.id.cardDetailsImageView).setImageDrawable(resources.getDrawable(assignCardImage(cashFlowDb!!, cardDetails.cardNumber)))
+        findViewById<ImageView>(R.id.cardDetailsImageView).setImageDrawable(
+            resources.getDrawable(
+                assignCardImage(
+                    cashFlowDb!!,
+                    cardDetails.cardNumber
+                )
+            )
+        )
         findViewById<TextView>(R.id.cardNameDetailsTextView).text = cardDetails.cardName
 
         createRecyclerView(txnList)
@@ -74,7 +81,7 @@ class CardDetailActivity : AppCompatActivity() {
         val userExists = userRepository?.userExistsByEmail("geteca94@gmail.com")
 
         if (!userExists!!) {
-            val userToInsert = User(0, "Gerardo", "Tenorio", null, "geteca94@gmail.com")
+            val userToInsert = User(0, "Gerardo", "Tenorio", null, "geteca94@gmail.com", "Serpentine94$")
             val userId = userRepository?.insertUser(userToInsert)
             Log.i("DBTest", String.format("%s has been inserted with id %d", userToInsert.email, userId))
         } else {
@@ -82,7 +89,7 @@ class CardDetailActivity : AppCompatActivity() {
         }
     }
 
-    fun assignCardImage(cashFlowDb: CashFlowDatabase, cardNumber: String) : Int{
+    fun assignCardImage(cashFlowDb: CashFlowDatabase, cardNumber: String): Int {
         val creditCardRepository = cashFlowDb.cardRepository()
         var cardData: CreditCard? = null
         GlobalScope.launch {

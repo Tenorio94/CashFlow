@@ -16,6 +16,10 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value=".MainActivity"/>
         </activity>
+
+        <activity android:name="com.familyapps.cashflow.application.login.LoginActivity">
+        </activity>
+
         <activity android:name=".MainActivity"
                   android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

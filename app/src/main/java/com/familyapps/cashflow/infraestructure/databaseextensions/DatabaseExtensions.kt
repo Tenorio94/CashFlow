@@ -27,21 +27,21 @@ fun populateTransactions(cashFlowDb: CashFlowDatabase?, cardNumber: String): Arr
     workerThread = DbWorkerThread("cashFlowThread")
     workerThread.start()
 
-    val LOG_TAG = "CF_CD_TxnPopulation"
-    Log.i(LOG_TAG, "Running transaction population...")
+    val logTag = "CF_CD_TxnPopulation"
+    Log.i(logTag, "Running transaction population...")
 
     val txnSummaryList = arrayListOf<CardDetailsTransactionSummary>()
 
 
     GlobalScope.launch {
         val txnRepository = cashFlowDb?.transactionRepository()
-        Log.i(LOG_TAG, String.format("Looking for transactions for card %s", cardNumber))
+        Log.i(logTag, String.format("Looking for transactions for card %s", cardNumber))
         val txnList = txnRepository?.findTransactionsByCardNumber(cardNumber)
 
         if (txnList!!.isNotEmpty()) {
             txnList.forEach {
                 Log.i(
-                    LOG_TAG,
+                    logTag,
                     String.format("Transaction found for Card %s with Description %s", cardNumber, it.description)
                 )
                 val cardDetailsTxn = CardDetailsTransactionSummary(
@@ -52,7 +52,7 @@ fun populateTransactions(cashFlowDb: CashFlowDatabase?, cardNumber: String): Arr
                 txnSummaryList.add(cardDetailsTxn)
             }
         } else {
-            Log.i(LOG_TAG, "No transactions found... Populating")
+            Log.i(logTag, "No transactions found... Populating")
             txnRepository.insertBatchTransaction(createTxnList())
         }
     }
@@ -67,8 +67,8 @@ fun populateStatements(cashFlowDb: CashFlowDatabase?): ArrayList<CardSummaryStat
     val currentEmail = MainActivity.email
     val cardStatementList = arrayListOf<CardSummaryStatement>()
 
-    val LOG_TAG = "CF_MA_StatementPopulating"
-    Log.i(LOG_TAG, "Running statement population...")
+    val logTag = "CF_MA_StatementPopulating"
+    Log.i(logTag, "Running statement population...")
 
     GlobalScope.launch {
         val statementRepository = cashFlowDb?.statementRepository()
@@ -79,7 +79,7 @@ fun populateStatements(cashFlowDb: CashFlowDatabase?): ArrayList<CardSummaryStat
 
         if (statementList!!.isNotEmpty()) {
             statementList.forEach {
-                Log.i(LOG_TAG, String.format("Statement for Card Number %s found... Looking for card", it.cardNumber))
+                Log.i(logTag, String.format("Statement for Card Number %s found... Looking for card", it.cardNumber))
                 cardSearch = cardRepository?.findCreditCardByCardNumber(it.cardNumber)!!
 
                 val cardStatement =
@@ -323,40 +323,40 @@ fun populateCards(cashFlowDb: CashFlowDatabase?) {
     val cardRepository = cashFlowDb?.cardRepository()
     var cardList: List<CreditCard> = listOf()
 
-    val LOG_TAG = "CF_MA_CardPopulating"
-    Log.i(LOG_TAG, "Running card population...")
+    val logTag = "CF_MA_CardPopulating"
+    Log.i(logTag, "Running card population...")
 
     GlobalScope.launch {
         cardList = cardRepository?.findAllCreditCardsByEmail(MainActivity.email)!!
 
         if (cardList.isNotEmpty()) {
-            Log.i(LOG_TAG, "Cards have already been populated...")
+            Log.i(logTag, "Cards have already been populated...")
             cardList.forEach {
-                Log.i(LOG_TAG, String.format("%s card found with number %s", it.cardName, it.cardNumber))
+                Log.i(logTag, String.format("%s card found with number %s", it.cardName, it.cardNumber))
             }
         } else {
             cardRepository?.insertBatchCreditCard(createCardList())
-            Log.i(LOG_TAG, "Cards empty... DB Updated")
+            Log.i(logTag, "Cards empty... DB Updated")
         }
     }
 }
 
 fun populateBanks(cashFlowDb: CashFlowDatabase?) {
-    val LOG_TAG = "CF_MA_BankPopulating"
-    Log.i(LOG_TAG, "Running bank population...")
+    val logTag = "CF_MA_BankPopulating"
+    Log.i(logTag, "Running bank population...")
 
     GlobalScope.launch {
         val bankRepository = cashFlowDb?.bankRepository()
         var bankList = cashFlowDb?.bankRepository()?.findAllBanks()
 
         if (bankList!!.isNotEmpty()) {
-            Log.i(LOG_TAG, "Banks have been populated before.")
+            Log.i(logTag, "Banks have been populated before.")
             bankList.forEach {
-                Log.i(LOG_TAG, String.format("%s in the list with id %d", it.bankName, it.id))
+                Log.i(logTag, String.format("%s in the list with id %d", it.bankName, it.id))
             }
         } else {
             bankRepository?.insertBankBatch(createBankList())
-            Log.i(LOG_TAG, "No Banks present... Banks have been inserted.")
+            Log.i(logTag, "No Banks present... Banks have been inserted.")
         }
     }
 }

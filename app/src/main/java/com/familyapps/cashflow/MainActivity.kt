@@ -22,9 +22,10 @@ import java.time.format.TextStyle
 import java.util.*
 import kotlin.collections.ArrayList
 import android.content.Intent
-import android.preference.PreferenceManager
 import com.familyapps.cashflow.application.login.LoginActivity
-import com.familyapps.cashflow.infraestructure.Session
+import com.familyapps.cashflow.infraestructure.deleteSession
+import com.familyapps.cashflow.infraestructure.getSession
+import java.time.Instant
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -87,9 +88,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         summaryRecyclerView.adapter = summaryRecViewAdapter
     }
 
-    fun verifyUserLoggedIn(): Boolean {
-        val userSession = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        val userName = userSession.getString("userName", "")
+    private fun verifyUserLoggedIn(): Boolean {
+        val userName = getSession(this, Instant.now())
         if (userName == "") {
             Log.i(logTag, "User not logged in... Redirecting to login.")
             startActivity(Intent(this, LoginActivity::class.java))
@@ -108,7 +108,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         Log.i("CreateRV", cardSummaryList[cardSummaryList.size - 1].cardSummaryName)
         summaryRecViewAdapter.notifyItemInserted(cardSummaryList.size - 1)
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -120,7 +119,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "Cards clicked", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_logout -> {
-                Toast.makeText(this, "Sign out clicked", Toast.LENGTH_SHORT).show()
+                Log.i(logTag, "Signing out user...")
+                deleteSession(this)
+                startActivity(Intent(this, LoginActivity::class.java))
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

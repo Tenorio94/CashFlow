@@ -2,6 +2,7 @@ package com.familyapps.cashflow.application.login
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -11,21 +12,25 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.familyapps.cashflow.MainActivity
 import com.familyapps.cashflow.R
+import com.familyapps.cashflow.infraestructure.setSession
 import com.familyapps.cashflow.model.CashFlowDatabase
+import com.familyapps.cashflow.model.user.User
 import com.familyapps.cashflow.model.user.UserRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.MessageFormat
+import java.time.Instant
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var cashFlowDb: CashFlowDatabase
     private lateinit var userRepository: UserRepository
 
-    private val LOGTAG = "CF_LA_MainLogin"
+    private val logTag = "CF_LA_MainLogin"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         cashFlowDb = CashFlowDatabase.getInstance(this)
+        userRepository = cashFlowDb.userRepository()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
     }
@@ -40,27 +45,41 @@ class LoginActivity : AppCompatActivity() {
 
         if (validateInputs(emailTxt, passwordTxt)) {
             if (validateUser(emailTxt)) {
-                if (validateLogin(emailTxt, passwordTxt)) {
-                    Log.i(LOGTAG, "Logging in...")
+                if (validatePassword(emailTxt, passwordTxt) != null) {
+                    Log.i(logTag, String.format("Logging in with user %s", emailTxt))
+                    setSession(this, emailTxt, passwordTxt, Instant.now())
+                    startActivity(Intent(this, MainActivity::class.java))
+                    this.finish()
                 }
             }
         }
     }
 
-    private fun validateLogin(email: String, password: String): Boolean {
-        return false
+    private fun validatePassword(email: String, password: String): User? {
+        var searchedUser: User? = null
+
+        GlobalScope.launch {
+            searchedUser = userRepository.findUserByEmail(email)
+        }
+
+        Thread.sleep(30)
+        if (searchedUser != null) {
+            if (searchedUser!!.password.equals(password)) {
+                return searchedUser!!
+            }
+        }
+        Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
+        return null
     }
 
     private fun validateUser(email: String): Boolean {
         var userExistence = false
-        userRepository = cashFlowDb.userRepository()
         GlobalScope.launch {
             userExistence = userRepository.userExistsByEmail(email)
-            Log.i(LOGTAG, userRepository.getAllUsers().get(0).email)
         }
         Thread.sleep(30)
-        if (userExistence){
-            Log.i(LOGTAG, String.format("Validating user %s", email))
+        if (userExistence) {
+            Log.i(logTag, String.format("Validating user %s", email))
             return true
         }
         Toast.makeText(this, "User does not exist, please register...", Toast.LENGTH_SHORT).show()

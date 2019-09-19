@@ -81,7 +81,7 @@ class CardDetailActivity : AppCompatActivity() {
         val userExists = userRepository?.userExistsByEmail("geteca94@gmail.com")
 
         if (!userExists!!) {
-            val userToInsert = User(0, "Gerardo", "Tenorio", null, "geteca94@gmail.com", "Serpentine94$")
+            val userToInsert = User(null, "Gerardo", "Tenorio", null, "geteca94@gmail.com", "Serpentine94$")
             val userId = userRepository?.insertUser(userToInsert)
             Log.i("DBTest", String.format("%s has been inserted with id %d", userToInsert.email, userId))
         } else {

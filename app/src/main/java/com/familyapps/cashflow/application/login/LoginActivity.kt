@@ -9,11 +9,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.familyapps.cashflow.MainActivity
 import com.familyapps.cashflow.R
+import com.familyapps.cashflow.application.registration.RegistrationActivity
 import com.familyapps.cashflow.infraestructure.setSession
 import com.familyapps.cashflow.model.CashFlowDatabase
 import com.familyapps.cashflow.model.user.User
@@ -36,12 +36,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun registerUser(view: View) {
-
+        startActivity(Intent(this, RegistrationActivity::class.java))
     }
 
     fun logButtonListener(view: View) {
-        val emailTxt = findViewById<TextView>(R.id.emailTxt).text.toString()
-        val passwordTxt = findViewById<TextView>(R.id.pswdTxt).text.toString()
+        val emailTxt = findViewById<EditText>(R.id.emailTxt).text.toString()
+        val passwordTxt = findViewById<EditText>(R.id.pswdTxt).text.toString()
 
         if (validateInputs(emailTxt, passwordTxt)) {
             if (validateUser(emailTxt)) {
@@ -117,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
-    fun hideKeyboard(activity: Activity?) {
+    private fun hideKeyboard(activity: Activity?) {
         if (activity != null && activity.window != null && activity.window.decorView != null) {
             val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(activity.window.decorView.windowToken, 0)

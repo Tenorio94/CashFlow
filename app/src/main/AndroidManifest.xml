@@ -12,9 +12,16 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.familyapps.cashflow.application.carddetails.CardDetailActivity"
-                  android:parentActivityName=".MainActivity">
+                  android:parentActivityName=".MainActivity"
+                  android:launchMode="singleTop">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value=".MainActivity"/>
+        </activity>
+
+        <activity android:name="com.familyapps.cashflow.application.txndetails.TxnDetailsActivity"
+                  android:parentActivityName="com.familyapps.cashflow.application.carddetails.CardDetailActivity">
+                  <meta-data android:name="android.support.PARENT_ACTIVITY"
+                             android:value="com.familyapps.cashflow.application.carddetails.CardDetailActivity" />
         </activity>
 
         <activity android:name="com.familyapps.cashflow.application.login.LoginActivity">

@@ -47,7 +47,8 @@ fun populateTransactions(cashFlowDb: CashFlowDatabase?, cardNumber: String): Arr
                 val cardDetailsTxn = CardDetailsTransactionSummary(
                     convertDoubleToCash(it.amountPerMonth!!),
                     convertInstantToString(it.txnDate),
-                    it.description!!
+                    it.description!!,
+                    it.id.toString()
                 )
                 txnSummaryList.add(cardDetailsTxn)
             }

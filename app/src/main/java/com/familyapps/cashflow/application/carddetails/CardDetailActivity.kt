@@ -14,11 +14,9 @@ import com.familyapps.cashflow.infraestructure.databaseextensions.populateTransa
 import com.familyapps.cashflow.model.CashFlowDatabase
 import com.familyapps.cashflow.model.DbWorkerThread
 import com.familyapps.cashflow.model.card.CreditCard
-import com.familyapps.cashflow.model.transaction.Transaction
 import com.familyapps.cashflow.model.user.User
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 
 class CardDetailActivity : AppCompatActivity() {

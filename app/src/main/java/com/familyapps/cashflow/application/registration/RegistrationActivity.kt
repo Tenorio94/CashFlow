@@ -81,6 +81,7 @@ class RegistrationActivity : AppCompatActivity() {
                 Log.i(logTag, "Registering user...")
                 registerUserToDatabase()
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             }
         }
     }

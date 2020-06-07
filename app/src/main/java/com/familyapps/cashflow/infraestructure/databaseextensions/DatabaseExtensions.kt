@@ -37,6 +37,7 @@ fun populateTransactions(cashFlowDb: CashFlowDatabase?, cardNumber: String): Arr
         val txnRepository = cashFlowDb?.transactionRepository()
         Log.i(logTag, String.format("Looking for transactions for card %s", cardNumber))
         val txnList = txnRepository?.findTransactionsByCardNumber(cardNumber)
+        Thread.sleep(15)
 
         if (txnList!!.isNotEmpty()) {
             txnList.forEach {
@@ -47,7 +48,8 @@ fun populateTransactions(cashFlowDb: CashFlowDatabase?, cardNumber: String): Arr
                 val cardDetailsTxn = CardDetailsTransactionSummary(
                     convertDoubleToCash(it.amountPerMonth!!),
                     convertInstantToString(it.txnDate),
-                    it.description!!
+                    it.description!!,
+                    it.id.toString()
                 )
                 txnSummaryList.add(cardDetailsTxn)
             }
@@ -113,6 +115,9 @@ fun mapCardWithImage(cardName: String): Int {
 }
 
 fun createTxnList(): List<Transaction> {
+    val txn1Date = Instant.now().plusSeconds(Random.nextLong(86400))
+    val txn1OrigDate = txn1Date.minusSeconds(10512000)
+
     val txn1 = Transaction(
         null,
         "Macbook Pro",
@@ -121,10 +126,14 @@ fun createTxnList(): List<Transaction> {
         true,
         "24",
         29850.00 / 24,
-        Instant.now().plusSeconds(Random.nextLong(86400)),
-        "5499490538837717",
-        "79260547"
+        txn1Date,
+        "5499490538837865",
+        "79260547",
+        txn1OrigDate
     )
+
+    val txn2Date = Instant.now().plusSeconds(Random.nextLong(86400))
+    val txn2OrigDate = txn2Date.minusSeconds(13140000)
 
     val txn2 = Transaction(
         null,
@@ -134,10 +143,14 @@ fun createTxnList(): List<Transaction> {
         true,
         "6",
         12500.00 / 6,
-        Instant.now().plusSeconds(Random.nextLong(86400)),
-        "371775436701005",
-        "tenorio94"
+        txn2Date,
+        "371775435543443",
+        "tenorio94",
+        txn2OrigDate
     )
+
+    val txn3Date = Instant.now().plusSeconds(Random.nextLong(86400))
+    val txn3OrigDate = txn3Date.minusSeconds(23652000)
 
     val txn3 = Transaction(
         null,
@@ -147,10 +160,14 @@ fun createTxnList(): List<Transaction> {
         true,
         "12",
         24500.00 / 12,
-        Instant.now().plusSeconds(Random.nextLong(86400)),
-        "5499490538837717",
-        "79260547"
+        txn3Date,
+        "5499490538837865",
+        "79260547",
+        txn3OrigDate
     )
+
+    val txn4Date = Instant.now().plusSeconds(Random.nextLong(86400))
+    val txn4OrigDate = txn4Date.minusSeconds(10512000)
 
     val txn4 = Transaction(
         null,
@@ -160,10 +177,14 @@ fun createTxnList(): List<Transaction> {
         false,
         "1",
         24500.00 / 1,
-        Instant.now().plusSeconds(Random.nextLong(86400)),
-        "4196910100284245",
-        "gtenoriocastillo@gmail.com"
+        txn4Date,
+        "4196910100287234",
+        "gtenoriocastillo@gmail.com",
+        txn4OrigDate
     )
+
+    val txn5Date = Instant.now().plusSeconds(Random.nextLong(86400))
+    val txn5OrigDate = txn5Date.minusSeconds(2628000)
 
     val txn5 = Transaction(
         null,
@@ -173,9 +194,10 @@ fun createTxnList(): List<Transaction> {
         false,
         "1",
         2001.64 / 1,
-        Instant.now().plusSeconds(Random.nextLong(86400)),
-        "5288439112077716",
-        "79260547"
+        txn5Date,
+        "5288439112015634",
+        "79260547",
+        txn5OrigDate
     )
 
 
@@ -189,7 +211,7 @@ fun createStatementList(): List<Statement> {
         Random.nextDouble(15000.00),
         Instant.now(),
         Instant.now().plusSeconds(2419200),
-        "371775436701005",
+        "371775435543443",
         "tenorio94",
         "gtenoriocastillo@gmail.com"
     )
@@ -200,7 +222,7 @@ fun createStatementList(): List<Statement> {
         Random.nextDouble(15000.00),
         Instant.now(),
         Instant.now().plusSeconds(2419200),
-        "5499490538837717",
+        "5499490538837865",
         "79260547",
         "gtenoriocastillo@gmail.com"
     )
@@ -211,7 +233,7 @@ fun createStatementList(): List<Statement> {
         Random.nextDouble(15000.00),
         Instant.now(),
         Instant.now().plusSeconds(2419200),
-        "5288439112077716",
+        "5288439112015634",
         "79260547",
         "gtenoriocastillo@gmail.com"
     )
@@ -222,7 +244,7 @@ fun createStatementList(): List<Statement> {
         Random.nextDouble(15000.00),
         Instant.now(),
         Instant.now().plusSeconds(2419200),
-        "4196910100284245",
+        "4196910100287234",
         "gtenoriocastillo@gmail.com",
         "gtenoriocastillo@gmail.com"
     )
@@ -235,7 +257,7 @@ fun createCardList(): List<CreditCard> {
         null,
         "American Express Platinum",
         "AMEX_PT",
-        "371775436701005",
+        "371775435543443",
         Instant.now().plusSeconds(155520000),
         Instant.now(),
         "CREDIT",
@@ -252,7 +274,7 @@ fun createCardList(): List<CreditCard> {
         null,
         "Banamex Oro",
         "BMX_ORO",
-        "5499490538837717",
+        "5499490538837865",
         Instant.now().plusSeconds(155520000),
         Instant.now(),
         "CREDIT",
@@ -269,7 +291,7 @@ fun createCardList(): List<CreditCard> {
         null,
         "Banamex Clasica",
         "BMX_CLASICA",
-        "5288439112077716",
+        "5288439112015634",
         Instant.now().plusSeconds(155520000),
         Instant.now(),
         "CREDIT",
@@ -286,7 +308,7 @@ fun createCardList(): List<CreditCard> {
         null,
         "INVEX Volaris 2.0",
         "INV_VOLARIS2",
-        "4196910100284245",
+        "4196910100287234",
         Instant.now().plusSeconds(155520000),
         Instant.now(),
         "CREDIT",

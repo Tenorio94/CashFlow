@@ -37,5 +37,8 @@ data class Transaction (
     var cardNumber: String,
 
     @ColumnInfo(name = "ACCOUNT_NUMBER")
-    var accountNumber: String
+    var accountNumber: String,
+
+    @ColumnInfo(name = "ORIGINAL_TXN_DATE")
+    var originalTxnDate: Instant
 )

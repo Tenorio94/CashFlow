@@ -23,6 +23,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.content.Intent
 import com.familyapps.cashflow.application.login.LoginActivity
+import com.familyapps.cashflow.application.profile.ProfileActivity
 import com.familyapps.cashflow.infraestructure.deleteSession
 import com.familyapps.cashflow.infraestructure.getSession
 import java.time.Instant
@@ -46,6 +47,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var email = "gtenoriocastillo@gmail.com"
     }
 
+    /**
+     * Main function when this activity is invoked. Weather it is when loading the application
+     * or when it is being called after a login/register has been performed successfully. This
+     * function is the starter function of the activity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         val cashFlowDb: CashFlowDatabase? = CashFlowDatabase.getInstance(this)
         super.onCreate(savedInstanceState)
@@ -77,6 +83,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    /**
+     * Function used to populate the view containing the credit card information overview which
+     * includes primarily the data of the credit card and amount corresponding to the month
+     */
     private fun createRecycleView() {
         summaryRecyclerView = findViewById(R.id.cardSummaryRecyclerView)
         summaryRecyclerView.setHasFixedSize(true)
@@ -88,6 +98,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         summaryRecyclerView.adapter = summaryRecViewAdapter
     }
 
+    /**
+     *
+     *  Function used to check if there is an active user Session, in case there is no session the
+     *  screen will be redirected to the login page. If there is a session this will continue
+     *  loading the main screen which is the card overview.
+     *
+     */
     private fun verifyUserLoggedIn(): Boolean {
         val userName = getSession(this, Instant.now())
         if (userName == "") {
@@ -100,6 +117,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    /**
+     * Function to add a new Card to the RecyclerView, this is listening to the add button floating
+     * in the main view. The purpose of this button is to redirecto to the add new transaction for
+     * a list of cards.
+     */
     fun addCard(view: View) {
         cardSummaryList.add(
             CardSummaryStatement(
@@ -110,10 +132,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         summaryRecViewAdapter.notifyItemInserted(cardSummaryList.size - 1)
     }
 
+    /**
+     * Function controlling the navigation view. There are several buttons to be clicked. Once a
+     * button is clicked this will redirect depending on what the action is. Weather it is ending
+     * an activity or initializing a new one.
+     */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_profile -> {
-                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
+                Log.d(logTag, "Redirecting to profile viewing...")
+                startActivity(Intent(this, ProfileActivity::class.java))
             }
             R.id.nav_cards -> {
                 Toast.makeText(this, "Cards clicked", Toast.LENGTH_SHORT).show()

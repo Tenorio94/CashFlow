@@ -39,6 +39,12 @@
                     android:value=".MainActivity"/>
         </activity>
 
+        <activity android:name="com.familyapps.cashflow.application.profile.ProfileEditActivity"
+                android:parentActivityName=".application.profile.ProfileActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".application.profile.ProfileActivity"/>
+        </activity>
+
         <activity android:name=".MainActivity"
                   android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

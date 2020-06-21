@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profileEditingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.familyapps.cashflow.application.profile.ProfileEditActivity">
+
+
+        <EditText
+                android:id="@+id/profileEditingConfirmPasswordTextEdit"
+                android:layout_width="130dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/profileEditingTextPassword"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingPasswordText2" />
+
+        <TextView
+                android:id="@+id/profileEditingPasswordText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
+                android:text="Confirm Password"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.666"
+                app:layout_constraintStart_toEndOf="@+id/profileEditingPasswordText"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingSecondLastNameTextEdit" />
+
+        <TextView
+                android:id="@+id/profileEditingPasswordText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="50dp"
+                android:text="Password"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingLastNameTextEdit" />
+
+        <EditText
+                android:id="@+id/profileEditingSecondLastNameTextEdit"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Enter Second Last Name..."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/profileEditingLastNameTextEdit"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingSecondLastNameText" />
+
+        <TextView
+                android:id="@+id/profileEditingSecondLastNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Second Last Name"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.777"
+                app:layout_constraintStart_toEndOf="@+id/profileEditingLastNameText"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingNameTextEdit" />
+
+        <EditText
+                android:id="@+id/profileEditingLastNameTextEdit"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Enter Last Name..."
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingLastNameText" />
+
+        <TextView
+                android:id="@+id/profileEditingLastNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="50dp"
+                android:text="Last Name"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingNameTextEdit" />
+
+        <TextView
+                android:id="@+id/profileEditingNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="50dp"
+                android:text="First Name"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditDescription" />
+
+        <TextView
+                android:id="@+id/profileEditDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Update Profile"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+                android:id="@+id/profileEditingNameTextEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Enter First Name..."
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingNameText" />
+
+        <EditText
+                android:id="@+id/profileEditingTextPassword"
+                android:layout_width="130dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingPasswordText" />
+
+        <Button
+                android:id="@+id/profileEditingClearFormButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="65dp"
+                android:onClick="resetFields"
+                android:text="Clear"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingTextPassword" />
+
+        <Button
+                android:id="@+id/profileEditingSubmitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="65dp"
+                android:onClick="updateUserinformation"
+                android:text="Submit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileEditingConfirmPasswordTextEdit" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

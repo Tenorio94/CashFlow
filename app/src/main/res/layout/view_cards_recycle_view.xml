@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/cardViewCardSumaryImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@android:drawable/ic_menu_slideshow" />
+
+        <TextView
+            android:id="@+id/cardViewCardNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/cardViewCardSumaryImageView"
+            android:text="Card Name"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/cardViewCardNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardViewCardNameTextView"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/cardViewCardSumaryImageView"
+            android:fontFamily="@font/andada"
+            android:text="4256 7889 0098 0024"
+            android:textSize="15sp" />
+
+        <ImageButton
+                android:id="@+id/cardViewEditButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/cardViewCardNameTextView"
+                android:layout_marginStart="110dp"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <ImageButton
+                android:id="@+id/cardViewDeleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/cardViewEditButton"
+                android:layout_marginStart="20dp"
+                app:srcCompat="@android:drawable/ic_menu_delete" />
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

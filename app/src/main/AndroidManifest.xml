@@ -45,6 +45,12 @@
                     android:value=".application.profile.ProfileActivity"/>
         </activity>
 
+        <activity android:name="com.familyapps.cashflow.application.cards.ViewCardsActivity"
+                android:parentActivityName=".application.carddetails.CardDetailActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".application.profile.ProfileActivity"/>
+        </activity>
+
         <activity android:name=".MainActivity"
                   android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

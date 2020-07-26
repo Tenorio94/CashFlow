@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -22,10 +21,15 @@ import java.time.format.TextStyle
 import java.util.*
 import kotlin.collections.ArrayList
 import android.content.Intent
+import android.widget.TextView
+import com.familyapps.cashflow.application.cards.ViewCardsActivity
 import com.familyapps.cashflow.application.login.LoginActivity
 import com.familyapps.cashflow.application.profile.ProfileActivity
+import com.familyapps.cashflow.infraestructure.convertCashToDouble
+import com.familyapps.cashflow.infraestructure.convertDoubleToCash
 import com.familyapps.cashflow.infraestructure.deleteSession
 import com.familyapps.cashflow.infraestructure.getSession
+import kotlinx.android.synthetic.main.content_main.*
 import java.time.Instant
 
 
@@ -54,6 +58,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         val cashFlowDb: CashFlowDatabase? = CashFlowDatabase.getInstance(this)
+        var monthlyStatement: Double = 0.0
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -78,9 +84,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             createRecycleView()
 
             cardSummaryList.forEach {
+                monthlyStatement += convertCashToDouble(it.cardSummaryStatement)
                 Log.i(logTag, String.format("%s statement for %s card.", it.cardSummaryStatement, it.cardSummaryName))
             }
         }
+        val monthlyStatmentTextView: TextView = this.monthlyMoneyTxtView
+        monthlyStatmentTextView.text = convertDoubleToCash(monthlyStatement)
     }
 
     /**
@@ -144,7 +153,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this, ProfileActivity::class.java))
             }
             R.id.nav_cards -> {
-                Toast.makeText(this, "Cards clicked", Toast.LENGTH_SHORT).show()
+                Log.d(logTag, "Redirecting to card viewing...")
+                startActivity(Intent(this, ViewCardsActivity::class.java))
             }
             R.id.nav_logout -> {
                 Log.i(logTag, "Signing out user...")

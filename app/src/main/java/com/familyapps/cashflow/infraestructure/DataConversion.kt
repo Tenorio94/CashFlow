@@ -16,9 +16,24 @@ import java.time.format.FormatStyle
  *
  * @return String - Double formatted into a String in format $X,XXX,XXX.XX
  */
-fun convertDoubleToCash(doubleToConvert: Double) : String{
+fun convertDoubleToCash(doubleToConvert: Double) : String {
     val currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US)
     return currencyFormatter.format(doubleToConvert)
+}
+
+/**
+ * Function used to convert a String into a Number, this contains the traditional format of when we
+ * manage currencies. This is used to display the information on the UI
+ *
+ * @param doubleToConvert - String containing the number representing the cash format.
+ *
+ * @return Double - Number that represented the cash input.
+ */
+fun convertCashToDouble(cashToConvert: String) : Double {
+    val numberStringToConvert = cashToConvert.substring(1)
+    val currencyFormatter = NumberFormat.getInstance(Locale.US)
+
+    return currencyFormatter.parse(numberStringToConvert).toDouble()
 }
 
 /**
